@@ -65,7 +65,7 @@ if __name__ == "__main__":
             # moving the snake
             alive = t_snake.move(result)
             # checking for loops made by snake
-            if t_snake.steps_taken > (len(t_snake.list)/5*100):
+            if t_snake.steps_taken > (len(t_snake.list) / 5 * 100):
                 if not checkloop:
                     checkloop = True
                     any_point = (t_snake.head_x, t_snake.head_y)
@@ -79,18 +79,29 @@ if __name__ == "__main__":
             else:
                 checkloop = False
             if not alive:
-                text = 'Generation : ' + str(generation+1) + '\t\t' + \
-                    'Score : ' + str(len(t_snake.list)-1)+'\t[Dead]'
+                dead = ""
+                text = 'Generation : ' + str(generation + 1) + '\t\t' + \
+                       'Score : ' + str(len(t_snake.list) - 1) + '\t[Dead]'
                 if t_snake.crash_wall and t_snake.crash_body:
-                    print('killed,', 'generation : ', generation+1, 'score : ', len(t_snake.list)-1)
+                    dead = "killed"
+                    print('killed,', 'generation : ', generation + 1, 'score : ', len(t_snake.list) - 1)
                 elif t_snake.crash_wall and not t_snake.crash_body:
+                    dead = "wall"
                     print('crashed on wall,', 'generation : ',
-                          generation+1, 'score : ', len(t_snake.list)-1)
+                          generation + 1, 'score : ', len(t_snake.list) - 1)
                 else:
+                    dead = "body"
                     print('crashed on body,', 'generation : ',
-                          generation+1, 'score : ', len(t_snake.list)-1)
+                          generation + 1, 'score : ', len(t_snake.list) - 1)
                 pygame.display.set_caption(text)
-                time.sleep(2)
+
+                if generation+1 == 1:
+                    open("results.csv", "w").close()
+
+                with open("results.csv", "a") as f:
+                    f.write(f"{generation + 1},{dead},{len(t_snake.list) - 1}\n")
+
+                # time.sleep(2)
                 break
             if (t_snake.head_x, t_snake.head_y) == arena.food:
                 t_snake.steps_taken = 0
@@ -103,11 +114,11 @@ if __name__ == "__main__":
             screen = arena.drawFood(screen, col.pink)
             screen = t_snake.draw(screen, col.blue)
             pygame.display.update()
-            text = 'Generation : ' + str(generation+1) + '\t\t' + \
-                'Score : ' + str(len(t_snake.list)-1)+'\t[Press q to kill]'
+            text = 'Generation : ' + str(generation + 1) + '\t\t' + \
+                   'Score : ' + str(len(t_snake.list) - 1) + '\t[Press q to kill]'
             pygame.display.set_caption(text)
             pygame.display.update()
-            time.sleep(0.03)
+            # time.sleep(0.03)
         generation += 1
     pygame.quit()
     quit()
