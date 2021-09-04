@@ -94,11 +94,11 @@ if __name__ == "__main__":
                     print('crashed on body,', 'generation : ',
                           generation + 1, 'score : ', len(t_snake.list) - 1)
                 pygame.display.set_caption(text)
-
+                filename = input("Filename : ")
                 if generation+1 == 1:
-                    open("results.csv", "w").close()
+                    open(f"{filename}.csv", "w").close()
 
-                with open("results.csv", "a") as f:
+                with open(f"{filename}.csv", "a") as f:
                     f.write(f"{generation + 1},{dead},{len(t_snake.list) - 1}\n")
 
                 # time.sleep(2)
