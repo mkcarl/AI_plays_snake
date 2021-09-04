@@ -8,6 +8,7 @@ import argparse
 from input import *
 
 if __name__ == "__main__":
+    filename = input("Filename : ")
     # command line argument parser
     ap = argparse.ArgumentParser()
     ap.add_argument('-i', '--input', required=True, help='relative path of the saved pickle file')
@@ -94,7 +95,6 @@ if __name__ == "__main__":
                     print('crashed on body,', 'generation : ',
                           generation + 1, 'score : ', len(t_snake.list) - 1)
                 pygame.display.set_caption(text)
-                filename = input("Filename : ")
                 if generation+1 == 1:
                     open(f"{filename}.csv", "w").close()
 
